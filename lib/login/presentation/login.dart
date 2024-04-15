@@ -2,11 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:notes/screens/login/cubit/cubit.dart';
-import 'package:notes/screens/login/cubit/states.dart';
-import 'package:notes/widgets/widgets.dart';
+import 'package:notes/login/presentation/cubit/cubit.dart';
+import 'package:notes/login/presentation/cubit/states.dart';
+import 'package:notes/common/widgets.dart';
 
-import '../register/register_screen.dart';
+import '../../register/presentation/register_screen.dart';
 class Login extends StatefulWidget {
   @override
   State<Login> createState() => _LoginState();

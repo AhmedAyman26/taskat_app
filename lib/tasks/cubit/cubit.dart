@@ -2,29 +2,19 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:notes/tasks/cubit/states.dart';
+import 'package:notes/tasks/presentation/pages/archieved_tasks/archieved_tasks_screen.dart';
+import 'package:notes/tasks/presentation/pages/done_tasks/done_tasks_screen.dart';
+import 'package:notes/tasks/presentation/pages/new_tasks/new_tasks_screen.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:notes/cubit/states.dart';
-import 'package:notes/screens/new_tasks/new_tasks_screen.dart';
 
-import '../screens/archieved_tasks/archieved_tasks_screen.dart';
-import '../screens/done_tasks/done_tasks_screen.dart';
 
 class AppCubit extends Cubit<AppStates> {
   AppCubit() : super(AppInitialStates());
 
   static AppCubit get(context) => BlocProvider.of(context);
 
-  int currentIndex = 0;
-  List<Widget> Screens = [
-    NewTasksScreen(),
-    DoneTasksScreen(),
-    ArchivedTasksScreen(),
-  ];
-  List<String> title = ['Tasks', 'DoneTasks', 'ArchivedTasks'];
-  void changeIndex(int index) {
-    currentIndex = index;
-    emit(AppChangeBottomNavBarState());
-  }
+
 
   late Database database;
   List<Map> newTasks = [];

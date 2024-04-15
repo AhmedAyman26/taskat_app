@@ -33,7 +33,7 @@ class _TestState extends State<Test> {
   var imagePicker = ImagePicker();
   uploadImage()async
   {
-    var imagePicked=await imagePicker.getImage(source: ImageSource.camera);
+    var imagePicked=await imagePicker.pickImage(source: ImageSource.camera);
     if(imagePicked!=null)
     {
       file=File(imagePicked.path);

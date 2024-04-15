@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:notes/styles/colors.dart';
+import 'package:notes/common/styles/colors.dart';
 
 ThemeData darkTheme=ThemeData(
   scaffoldBackgroundColor: HexColor('333739'),
   appBarTheme: AppBarTheme(
-      titleTextStyle: TextStyle(
+      titleTextStyle: const TextStyle(
           color: Colors.white,
           fontWeight: FontWeight.bold,
           fontSize: 20.0
@@ -17,11 +17,11 @@ ThemeData darkTheme=ThemeData(
       ),
       backgroundColor: HexColor('333739'),
       elevation: 0.0,
-      iconTheme: IconThemeData(
+      iconTheme: const IconThemeData(
         color: Colors.white,
       )
   ),
-  floatingActionButtonTheme: FloatingActionButtonThemeData(
+  floatingActionButtonTheme: const FloatingActionButtonThemeData(
       backgroundColor: Colors.greenAccent
   ),
   bottomNavigationBarTheme: BottomNavigationBarThemeData(
@@ -31,7 +31,7 @@ ThemeData darkTheme=ThemeData(
       unselectedItemColor: Colors.grey
 
   ),
-  textTheme: TextTheme(
+  textTheme: const TextTheme(
     bodyText1: TextStyle(
       fontSize: 18,
       fontWeight: FontWeight.w600,
@@ -44,17 +44,17 @@ ThemeData lightTheme=ThemeData(
   primaryColor: defaultcolor,
   primarySwatch: Colors.green,
   scaffoldBackgroundColor: Colors.white,
-  buttonTheme: ButtonThemeData(
+  buttonTheme: const ButtonThemeData(
     buttonColor: Colors.greenAccent
   ),
-  textTheme: TextTheme(
+  textTheme: const TextTheme(
     bodyText1: TextStyle(
       fontSize: 18,
       fontWeight: FontWeight.w600,
       color: Colors.black,
     ),
   ),
-  appBarTheme: AppBarTheme(
+  appBarTheme: const AppBarTheme(
       titleSpacing: 20,
       titleTextStyle: TextStyle(
           color: Colors.black,
@@ -71,10 +71,10 @@ ThemeData lightTheme=ThemeData(
           color: Colors.black45
       )
   ),
-  floatingActionButtonTheme: FloatingActionButtonThemeData(
+  floatingActionButtonTheme: const FloatingActionButtonThemeData(
       backgroundColor: Colors.greenAccent
   ),
-  bottomNavigationBarTheme: BottomNavigationBarThemeData(
+  bottomNavigationBarTheme: const BottomNavigationBarThemeData(
     type: BottomNavigationBarType.fixed,
     selectedItemColor: Colors.greenAccent,
 

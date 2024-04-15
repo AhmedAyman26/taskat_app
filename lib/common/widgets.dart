@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:notes/cubit/cubit.dart';
+import 'package:notes/tasks/cubit/cubit.dart';
 
 Widget defaultButtoun({
   double width = double.infinity,

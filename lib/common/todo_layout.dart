@@ -1,20 +1,23 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:notes/tasks/cubit/cubit.dart';
+import 'package:notes/tasks/cubit/states.dart';
+import 'package:notes/tasks/presentation/pages/archieved_tasks/archieved_tasks_screen.dart';
+import 'package:notes/tasks/presentation/pages/done_tasks/done_tasks_screen.dart';
+import 'package:notes/tasks/presentation/pages/new_tasks/new_tasks_screen.dart';
 import 'package:path/path.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:notes/cubit/cubit.dart';
-import 'package:notes/cubit/states.dart';
-import 'package:notes/screens/login/login.dart';
-import 'package:notes/widgets/widgets.dart';
+import 'package:notes/login/presentation/login.dart';
+import 'package:notes/common/widgets.dart';
 
 class TodoLayout extends StatefulWidget {
 
-  TodoLayout({super.key});
+  const TodoLayout({super.key});
 
   @override
   State<TodoLayout> createState() => _TodoLayoutState();
@@ -23,7 +26,8 @@ class TodoLayout extends StatefulWidget {
 class _TodoLayoutState extends State<TodoLayout> {
   CollectionReference notesRef=FirebaseFirestore.instance.collection('notes');
   File? file;
-  Reference? refSotrage;
+  Reference? refStorage;
+  String? imageUrl;
   var imagePicker=ImagePicker();
   var scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -35,15 +39,16 @@ class _TodoLayoutState extends State<TodoLayout> {
 
   var timeController = TextEditingController();
 
-  getUser()
-  {
-    var user =FirebaseAuth.instance.currentUser;
-    print(user!.email);
-  }
-
+  int currentIndex = 0;
+  List<String> titles = ['Tasks', 'DoneTasks', 'ArchivedTasks'];
+  List<Widget> screens=[];
   @override
   void initState() {
-    getUser();
+     screens = [
+      Offstage(offstage: currentIndex != 0, child: const NewTasksScreen()),
+      Offstage(offstage: currentIndex != 1, child: DoneTasksScreen()),
+      Offstage(offstage: currentIndex != 2, child: ArchivedTasksScreen()),
+    ];
     super.initState();
   }
 
@@ -62,34 +67,42 @@ class _TodoLayoutState extends State<TodoLayout> {
           return Scaffold(
             key: scaffoldKey,
             appBar: AppBar(
-              title: Text(cubit.title[cubit.currentIndex]),
+              title: Text(titles[currentIndex]),
               actions:
               [
                 IconButton(onPressed: ()async
                 {
                   await FirebaseAuth.instance.signOut();
                   navigateAndFinish(context, Login());
-                }, icon: Icon(
+                }, icon: const Icon(
                   Icons.exit_to_app_outlined
                 ))
               ],
             ),
-            body: cubit.Screens[cubit.currentIndex],
+            body:  Stack(
+              children: screens,
+            ),
             floatingActionButton: FloatingActionButton(
               onPressed: () async{
                 if (cubit.isBottomSheetShown) {
                   if (formKey.currentState!.validate()) {
-                    await refSotrage!.putFile(file!);
-                    var imageurl=await refSotrage!.getDownloadURL();
+                    if(refStorage!=null) {
+                      await refStorage!.putFile(file!);
+                      imageUrl = await refStorage!.getDownloadURL();
+                    }
                     cubit.insertToDatabase(
                         title: titleController.text,
                         time: timeController.text,
                         date: dateController.text,
                         status: 'new',
-                        image: imageurl,
+                        image: imageUrl,
                         userId: FirebaseAuth.instance.currentUser!.uid
                     );
-                    Navigator.of(context).pop;
+                    if(mounted) {
+                      Navigator
+                          .of(context)
+                          .pop;
+                    }
                   }
                 } else {
                   scaffoldKey.currentState
@@ -148,7 +161,7 @@ class _TodoLayoutState extends State<TodoLayout> {
                                             initialDate: DateTime.now(),
                                             firstDate: DateTime.now(),
                                             lastDate:
-                                                DateTime.parse('2022-12-10'))
+                                                DateTime.parse('2030-12-10'))
                                         .then((value) {
                                       print(DateFormat.yMMMd().format(value!));
                                       dateController.text =
@@ -172,13 +185,13 @@ class _TodoLayoutState extends State<TodoLayout> {
                                     showModalBottomSheet(
                                         context: context,
                                         builder: (context)=>Container(
-                                          padding: EdgeInsets.all(20),
+                                          padding: const EdgeInsets.all(20),
                                           child: SingleChildScrollView(
                                             child: Column(
                                               crossAxisAlignment: CrossAxisAlignment.start,
                                               children:
                                               [
-                                                Text(
+                                                const Text(
                                                   'Please Choose Image',
                                                   style: TextStyle(
                                                     fontSize: 25,
@@ -188,19 +201,19 @@ class _TodoLayoutState extends State<TodoLayout> {
                                                 InkWell(
                                                   onTap: ()async
                                                   {
-                                                    var picked=await imagePicker.getImage(source: ImageSource.gallery);
+                                                    var picked=await imagePicker.pickImage(source: ImageSource.gallery);
                                                     if(picked !=null)
                                                     {
                                                       file=File(picked.path);
                                                       var imageName=basename(picked.path);
-                                                      refSotrage =FirebaseStorage.instance.ref('images/$imageName');
+                                                      refStorage =FirebaseStorage.instance.ref('images/$imageName');
                                                       Navigator.of(context).pop();
                                                     }
                                                   },
                                                   child: Container(
                                                     width: double.infinity,
-                                                    padding: EdgeInsets.all(10),
-                                                    child: Row(
+                                                    padding: const EdgeInsets.all(10),
+                                                    child: const Row(
                                                       children:
                                                       [
                                                         Icon(
@@ -219,19 +232,19 @@ class _TodoLayoutState extends State<TodoLayout> {
                                                 InkWell(
                                                   onTap: ()async
                                                   {
-                                                    var picked=await imagePicker.getImage(source: ImageSource.camera);
+                                                    var picked=await imagePicker.pickImage(source: ImageSource.camera);
                                                     if(picked !=null)
                                                     {
                                                       file=File(picked.path);
                                                       var imageName=basename(picked.path);
-                                                      refSotrage =FirebaseStorage.instance.ref('images/$imageName');
+                                                      refStorage =FirebaseStorage.instance.ref('images/$imageName');
                                                       Navigator.of(context).pop();
                                                     }
                                                   },
                                                   child: Container(
                                                     width: double.infinity,
-                                                    padding: EdgeInsets.all(10),
-                                                    child: Row(
+                                                    padding: const EdgeInsets.all(10),
+                                                    child: const Row(
                                                       children:
                                                       [
                                                         Icon(
@@ -273,23 +286,25 @@ class _TodoLayoutState extends State<TodoLayout> {
               ),
             ),
             bottomNavigationBar: BottomNavigationBar(
+
               type: BottomNavigationBarType.fixed,
-              currentIndex: cubit.currentIndex,
+              currentIndex: currentIndex,
               onTap: (index) {
-                cubit.changeIndex(index);
+                currentIndex = index;
+                setState(() {});
               },
-              items: [
-                const BottomNavigationBarItem(
+              items: const [
+                BottomNavigationBarItem(
                     icon: Icon(
                       Icons.menu,
                     ),
                     label: 'Tasks'),
-                const BottomNavigationBarItem(
+                BottomNavigationBarItem(
                     icon: Icon(
                       Icons.check_circle_outline,
                     ),
                     label: 'Done'),
-                const BottomNavigationBarItem(
+                BottomNavigationBarItem(
                     icon: Icon(
                       Icons.archive_outlined,
                     ),
@@ -302,8 +317,8 @@ class _TodoLayoutState extends State<TodoLayout> {
     );
   }
 
-  Future<String> getName() async {
-    return 'AhmedAyman';
-  }
+
 
 }
+
+

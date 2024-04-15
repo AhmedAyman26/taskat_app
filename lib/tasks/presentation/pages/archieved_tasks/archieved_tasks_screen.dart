@@ -3,9 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:notes/cubit/cubit.dart';
-import 'package:notes/cubit/states.dart';
-import 'package:notes/widgets/widgets.dart';
+import 'package:notes/common/widgets.dart';
+import 'package:notes/tasks/cubit/cubit.dart';
+import 'package:notes/tasks/cubit/states.dart';
 
 class ArchivedTasksScreen extends StatelessWidget {
 
@@ -24,6 +24,7 @@ class ArchivedTasksScreen extends StatelessWidget {
           {
             if(snapshot.hasData)
             {
+              print(snapshot.data);
               return ListView.separated(
                 itemBuilder: (context,index)=>BuildTaskItem(snapshot.data!.docs[index],context),
                 separatorBuilder: (context,index)=>myDivider(),

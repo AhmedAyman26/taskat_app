@@ -3,9 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:notes/layout/todo_layout.dart';
-import 'package:notes/screens/login/cubit/states.dart';
-import 'package:notes/widgets/widgets.dart';
+import 'package:notes/common/todo_layout.dart';
+import 'package:notes/login/presentation/cubit/states.dart';
+import 'package:notes/common/widgets.dart';
 
 class TodoLoginCubit extends Cubit<TodoLoginStates> {
   TodoLoginCubit() : super(TodoLoginInitialState());
