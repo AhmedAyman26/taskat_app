@@ -84,7 +84,7 @@ class _LoginState extends State<Login> {
                         SizedBox(
                           height: 10,
                         ),
-                        defaultButtoun(
+                        defaultButton(
                           text: 'login',
                           function: () async {
                             if (formKey.currentState!.validate()) {

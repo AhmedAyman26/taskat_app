@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:notes/tasks/cubit/cubit.dart';
+import 'package:notes/tasks/domain/models/task_model.dart';
 
-Widget defaultButtoun({
+Widget defaultButton({
   double width = double.infinity,
   Color background = Colors.greenAccent,
   bool isUpperCase = true,
@@ -60,7 +61,7 @@ Widget defaultFormField({
         border: OutlineInputBorder(),
       ),
     );
-Widget BuildTaskItem(QueryDocumentSnapshot note, context) => Dismissible(
+Widget BuildTaskItem(TaskModel task, context) => Dismissible(
   key:UniqueKey(),
   child: Padding(
     padding: const EdgeInsets.all(20.0),
@@ -71,7 +72,7 @@ Widget BuildTaskItem(QueryDocumentSnapshot note, context) => Dismissible(
           height: 50,
           child: Image(
             image: NetworkImage(
-              '${note['imageurl']}'
+              '${task.image}'
             ),
             fit: BoxFit.fill,
           ),
@@ -85,18 +86,18 @@ Widget BuildTaskItem(QueryDocumentSnapshot note, context) => Dismissible(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                '${note['title']}',
+                '${task.title}',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               Text(
-                '${note['date']}',
+                '${task.date}',
                 style: TextStyle(color: Colors.grey[300]),
               ),
               Text(
-                '${note['time']}',
+                '${task.time}',
                 style: TextStyle(color: Colors.grey[300]),
               ),
             ],
@@ -107,10 +108,10 @@ Widget BuildTaskItem(QueryDocumentSnapshot note, context) => Dismissible(
         ),
         IconButton(
           onPressed: () {
-            AppCubit.get(context).updateData(
-              status: 'done',
-              id: note.id,
-            );
+            // AppCubit.get(context).updateData(
+            //   status: 'done',
+            //   id: task.id??'',
+            // );
           },
           icon: Icon(
             Icons.check_box,
@@ -119,10 +120,10 @@ Widget BuildTaskItem(QueryDocumentSnapshot note, context) => Dismissible(
         ),
         IconButton(
           onPressed: () {
-            AppCubit.get(context).updateData(
-              status: 'archived',
-              id: note.id
-            );
+            // AppCubit.get(context).updateData(
+            //   status: 'archived',
+            //   id: task.id??''
+            // );
           },
           icon: Icon(
             Icons.archive,
@@ -133,7 +134,7 @@ Widget BuildTaskItem(QueryDocumentSnapshot note, context) => Dismissible(
     ),
   ),
   onDismissed: (direction) {
-    AppCubit.get(context).deleteData(id: note.id,url: note['imageurl']);
+    // AppCubit.get(context).deleteData(id: task.id??'',url: task.image??'');
   },
 );
 

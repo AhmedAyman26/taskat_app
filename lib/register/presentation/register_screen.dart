@@ -96,7 +96,7 @@ class RegisterScreen extends StatelessWidget {
                               SizedBox(
                                 height: 20,
                               ),
-                              defaultButtoun(
+                              defaultButton(
                                   function: () async {
                                     if(formKey.currentState!.validate())
                                     {
