@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:notes/common/app_injector.dart';
+import 'package:notes/common/di/app_injector.dart';
 import 'package:notes/firebase_options.dart';
 import 'package:notes/notes_app.dart';
 

@@ -1,10 +1,11 @@
 import 'dart:io';
+import 'package:notes/common/presentation/widgets/app_button.dart';
+import 'package:notes/common/presentation/widgets/app_text_form_field.dart';
 import 'package:path/path.dart' as path;
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:notes/common/widgets.dart';
 
 class AddNewTaskBottomSheet extends StatefulWidget {
   final TextEditingController titleController;
@@ -42,21 +43,22 @@ class _AddNewTaskBottomSheetState extends State<AddNewTaskBottomSheet> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            defaultFormField(
+            AppTextFormField(
               controller: widget.titleController,
               type: TextInputType.text,
               validate: (String? value) {
                 if (value!.isEmpty) {
                   return 'title must not be empty';
                 }
+                return null;
               },
               label: 'task title',
-              prefix: Icons.title,
+              prefix: const Icon(Icons.title),
             ),
             const SizedBox(
               height: 15,
             ),
-            defaultFormField(
+            AppTextFormField(
               controller: widget.timeController,
               type: TextInputType.datetime,
               onTap: () {
@@ -73,14 +75,15 @@ class _AddNewTaskBottomSheetState extends State<AddNewTaskBottomSheet> {
                 if (value!.isEmpty) {
                   return 'time must not be empty';
                 }
+                return null;
               },
               label: 'task time',
-              prefix: Icons.watch_later_outlined,
+              prefix:const Icon(Icons.watch_later_outlined),
             ),
             const SizedBox(
               height: 15,
             ),
-            defaultFormField(
+            AppTextFormField(
               controller: widget.dateController,
               type: TextInputType.datetime,
               onTap: () {
@@ -101,14 +104,15 @@ class _AddNewTaskBottomSheetState extends State<AddNewTaskBottomSheet> {
                 if (value!.isEmpty) {
                   return 'date must not be empty';
                 }
+                return null;
               },
               label: 'task date',
-              prefix: Icons.calendar_today,
+              prefix: const Icon(Icons.calendar_today),
             ),
             const SizedBox(
               height: 15,
             ),
-            defaultButton(
+            AppButton(
               function: () {
                 showModalBottomSheet(
                   context: context,

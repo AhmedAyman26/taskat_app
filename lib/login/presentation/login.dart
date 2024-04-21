@@ -1,13 +1,15 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:notes/common/presentation/widgets/app_button.dart';
+import 'package:notes/common/presentation/widgets/app_text_form_field.dart';
 import 'package:notes/login/presentation/cubit/cubit.dart';
 import 'package:notes/login/presentation/cubit/states.dart';
-import 'package:notes/common/widgets.dart';
+import 'package:notes/common/utils.dart';
 
-import '../../register/presentation/register_screen.dart';
+import '../../register/presentation/pages/register_page.dart';
 class Login extends StatefulWidget {
+  const Login({super.key});
+
   @override
   State<Login> createState() => _LoginState();
 }
@@ -40,37 +42,36 @@ class _LoginState extends State<Login> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           'Login',
                           style: TextStyle(
                             fontSize: 40,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
-                        defaultFormField(
+                        AppTextFormField(
                           controller: emailController,
                           label: 'email address',
-                          prefix: Icons.email,
+                          prefix: const Icon(Icons.email),
                           type: TextInputType.emailAddress,
                           validate: (value) {
                             if (value!.isEmpty) {
                               return 'You must enter email address';
                             }
+                            return null;
                           },
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
-                        defaultFormField(
+                        AppTextFormField(
                           controller: passwordController,
                           label: 'password',
-                          prefix: Icons.lock,
+                          prefix: const Icon(Icons.lock),
                           type: TextInputType.visiblePassword,
-                          isPassword: cubit.isPassword,
-                          suffix: cubit.suffix,
                           suffixPressed: () {
                             cubit.changePasswordVisibility();
                           },
@@ -81,10 +82,10 @@ class _LoginState extends State<Login> {
                             return null;
                           },
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
-                        defaultButton(
+                        AppButton(
                           text: 'login',
                           function: () async {
                             if (formKey.currentState!.validate()) {
@@ -97,20 +98,20 @@ class _LoginState extends State<Login> {
                             }
                           },
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(
+                            const Text(
                               'Don\'t have account?',
                             ),
                             TextButton(
                               onPressed: () {
-                                navigateAndFinish(context, RegisterScreen());
+                                navigateAndFinish(context, const RegisterPage());
                               },
-                              child: Text('RegisterNow'),
+                              child: const Text('RegisterNow'),
                             )
                           ],
                         ),

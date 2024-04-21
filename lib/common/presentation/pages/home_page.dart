@@ -1,22 +1,21 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:notes/tasks/presentation/pages/new_tasks/new_tasks_screen.dart';
-import 'package:path/path.dart';
+import 'package:notes/tasks/presentation/pages/archieved_tasks/archieved_tasks_page.dart';
+import 'package:notes/tasks/presentation/pages/done_tasks/done_tasks_page.dart';
+import 'package:notes/tasks/presentation/pages/new_tasks/new_tasks_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:notes/login/presentation/login.dart';
-import 'package:notes/common/widgets.dart';
+import 'package:notes/common/utils.dart';
 
-class TodoLayout extends StatefulWidget {
-  const TodoLayout({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
   @override
-  State<TodoLayout> createState() => _TodoLayoutState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _TodoLayoutState extends State<TodoLayout> {
+class _HomePageState extends State<HomePage> {
   CollectionReference notesRef = FirebaseFirestore.instance.collection('notes');
   File? file;
 
@@ -40,9 +39,9 @@ class _TodoLayoutState extends State<TodoLayout> {
           ),
           body: Stack(
             children:[
-              Offstage(offstage: currentIndex != 0, child: NewTasksPage()),
-              // Offstage(offstage: currentIndex != 1, child: DoneTasksScreen()),
-              // Offstage(offstage: currentIndex != 2, child: ArchivedTasksScreen()),
+              Offstage(offstage: currentIndex != 0, child: const NewTasksPage()),
+              Offstage(offstage: currentIndex != 1, child: const DoneTasksPage()),
+              Offstage(offstage: currentIndex != 2, child: const ArchivedTasksPage()),
             ]
           ),
           bottomNavigationBar: BottomNavigationBar(

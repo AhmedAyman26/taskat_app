@@ -2,10 +2,10 @@
 // import 'package:firebase_storage/firebase_storage.dart';
 // import 'package:flutter/material.dart';
 // import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:notes/tasks/cubit/states.dart';
-// import 'package:notes/tasks/presentation/pages/archieved_tasks/archieved_tasks_screen.dart';
-// import 'package:notes/tasks/presentation/pages/done_tasks/done_tasks_screen.dart';
-// import 'package:notes/tasks/presentation/pages/new_tasks/new_tasks_screen.dart';
+// import 'package:notes/tasks/cubit/register_states.dart';
+// import 'package:notes/tasks/presentation/pages/archieved_tasks/archieved_tasks_page.dart';
+// import 'package:notes/tasks/presentation/pages/done_tasks/done_tasks_page.dart';
+// import 'package:notes/tasks/presentation/pages/new_tasks/new_tasks_page.dart';
 // import 'package:sqflite/sqflite.dart';
 //
 //
@@ -62,26 +62,8 @@
 //     fabIcon = icon;
 //     emit(AppChangeBottomSheetState());
 //   }
-//
-//   void updateData({
-//   required String status,
-//   required String id,
-//
-// }) async
-//   {
-//
-//     await FirebaseFirestore.instance.collection('notes').doc(id).update(
-//         {
-//           'status':status
-//         }).then((value)
-//     {
-//       emit(AppUpdatetFirebaseState());
-//     }).then((value){
-//   emit(AppUpdatetFirebaseState());
-//
-//   });
-//
-//   }
+
+
 //
 //   void deleteData({
 //     required String id,

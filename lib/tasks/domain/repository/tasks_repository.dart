@@ -4,4 +4,5 @@ abstract class TasksRepository
 {
   Future<List<TaskModel>> getTaskByStatus(String status);
   Future<void> addNewTask(TaskModel task);
+  Future<void> updateTaskStatus(String id, String status);
 }

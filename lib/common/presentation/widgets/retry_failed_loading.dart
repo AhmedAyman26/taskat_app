@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:notes/common/dimensions.dart';
-import 'package:notes/common/widgets.dart';
+import 'package:notes/common/presentation/widgets/app_button.dart';
+import 'package:notes/common/utils.dart';
 
 
 class RetryFailedLoading extends StatelessWidget {
@@ -63,7 +64,7 @@ class RetryFailedLoading extends StatelessWidget {
             if (isFailedWidget)
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: Dimensions.pageMargins),
-                child: defaultButton(
+                child: AppButton(
                   text: retryButtonTitle ?? "Reload page",
                   function: onRetryPressed,
                 ),
