@@ -15,7 +15,7 @@ class TaskItem extends StatelessWidget {
         padding: const EdgeInsets.all(20.0),
         child: Row(
           children: [
-            SizedBox(
+            task.image!=null?SizedBox(
               width: 70,
               height: 50,
               child: Image(
@@ -24,7 +24,7 @@ class TaskItem extends StatelessWidget {
                 ),
                 fit: BoxFit.fill,
               ),
-            ),
+            ):const SizedBox(),
             const SizedBox(
               width: 20.0,
             ),
@@ -71,7 +71,7 @@ class TaskItem extends StatelessWidget {
                   ),
                 ),
               ],
-            ):SizedBox(),
+            ):const SizedBox(),
           ],
         ),
       ),
